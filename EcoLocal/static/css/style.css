@@ -117,3 +117,26 @@ footer {
     }
 }
 
+#main_map {
+    width: 100vw;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+}
+
+#map_direita {
+    width: 50vw;
+    height: 85vh;
+
+    padding-top: 15px;
+}
+
+#map_esquerda {
+    width: 45vw;
+    height: 85vh;
+}
+
+fieldset {
+    border: 2px solid #ccc;
+    padding: 15px;
+}

@@ -1,31 +1,49 @@
-function carregaTela(cep){
-    window.location.href = 'map.html'; 
+function validaCep() {
+    var cep = $('#buscar_cep').val();
+    if (cep == '') {
+        alert("√â preciso de um CEP v√°lido.");
+        return false;
+    }
 
+    var regexCep = /^[0-9]{5}-?[0-9]{3}$/;
+    if (!regexCep.test(cep)) {
+        alert("Formato de CEP inv√°lido. Exemplo correto: 01001-000");
+        $('#buscar_cep').val('');
+        return false;
+    }
+
+    return true;
 }
 
-function obterLatitudeLongitude()
+function buscarCep(cep) {
+    if ($('#loadingOverlay').length === 0) {
+        $('main').append('<div id="loadingOverlay"><div class="loader">Carregando...</div></div>');
+    }
+    $('#loadingOverlay').fadeIn();
 
+    $.ajax({
+        url: `https://viacep.com.br/ws/${cep}/json/`,
+        dataType: 'json',
+        success: function (data) {
+            $('#loadingOverlay').fadeOut();
 
-function obterBairro(latitude, longitude) {
-    const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            // A estrutura de resposta inclui v·rios elementos de endereÁo
-            const bairro = data.address.neighbourhood; // O bairro geralmente fica dentro de 'address.neighbourhood'
-            
-            if (bairro) {
-                console.log("Nome do bairro: ", bairro);
+            if (data.erro) {
+                alert("CEP n√£o encontrado.");
             } else {
-                console.log("Bairro n„o encontrado.");
+                var bairro = data.bairro ? data.bairro : 'Bairro n√£o encontrado';
+                
+                if (bairro === 'Bairro n√£o encontrado') {
+                    alert("Bairro n√£o encontrado para este CEP.");
+                }
+
+                localStorage.setItem('bairro', bairro);
+
+                window.location.href = 'map.html';
             }
-        })
-        .catch(error => console.error('Erro ao buscar informaÁıes do bairro:', error));
+        },
+        error: function () {
+            $('#loadingOverlay').fadeOut();
+            alert("Erro ao buscar informa√ß√µes do CEP.");
+        }
+    });
 }
-
-// Exemplo de latitude e longitude
-const latitude = -23.550520;  // Substitua pelo valor real
-const longitude = -46.633308; // Substitua pelo valor real
-
-obterBairro(latitude, longitude);
