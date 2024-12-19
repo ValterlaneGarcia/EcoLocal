@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/style.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../static/script.js/db_buscaCep.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>EcoLocal</title>
 </head>
 <body>
@@ -19,50 +18,33 @@
         <div id="buscador">
             <label for="buscador_cep"></label>
             <input id="buscar_cep" name="buscador_cep" type="search" placeholder="CEP">
-
             <a id="pesquisar" href="#">
                 <button id="pesquisar_cep"><i class='bx bx-search'></i></button>
             </a>
         </div>
     </main>
-
     <footer></footer>
 
+    <script src="../static/script.js/db_buscaCep.js"></script>
     <script>
-        $('#pesquisar_cep').click(function(e) {
+        $('#pesquisar_cep').click(function (e) {
             e.preventDefault();
 
             if (validaCep()) {
-            if ($('#loadingOverlay').length === 0) {
-            $('main').append('<div id="loadingOverlay"><div class="loader">Carregando...</div></div>');
-            }
+                if ($('#loadingOverlay').length === 0) {
+                    $('main').append('<div id="loadingOverlay"><div class="loader">Carregando...</div></div>');
+                }
                 $('#loadingOverlay').fadeIn();
 
-                setTimeout(function() {
-                    $('#loadingOverlay').fadeOut(); 
+                setTimeout(function () {
+                    $('#loadingOverlay').fadeOut();
                     var cep = $('#buscar_cep').val();
-                        carregaTela(cep);
+                    buscarCep(cep);
                 }, 3000);
             } else {
                 $('#buscar_cep').val('');
             }
         });
-
-        function validaCep() {
-            var cep = $('#buscar_cep').val();
-            if (cep == '') {
-                alert("É preciso de um CEP válido.");
-                return false;
-            }
-
-            var regexCep = /^[0-9]{5}-?[0-9]{3}$/;
-            if (!regexCep.test(cep)) {
-                alert("É preciso de um CEP válido.");
-                return false;
-            }
-
-            return true;
-        }
     </script>
 </body>
 </html>
