@@ -29,6 +29,10 @@ main {
     flex-direction: column;
 }
 
+#ImgDPessoas{
+    width: 25%;
+}
+
 footer {
     width: 100vw;
     height: 5vh;
