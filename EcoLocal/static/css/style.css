@@ -138,6 +138,9 @@ footer {
 #map_esquerda {
     width: 45vw;
     height: 85vh;
+
+    padding-top: 15px;
+
 }
 
 fieldset {

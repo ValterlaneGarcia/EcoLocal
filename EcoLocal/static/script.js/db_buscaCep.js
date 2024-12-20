@@ -37,7 +37,6 @@ function buscarCep(cep) {
                 }
 
                 localStorage.setItem('bairro', bairro);
-
                 window.location.href = 'map.html';
             }
         },
