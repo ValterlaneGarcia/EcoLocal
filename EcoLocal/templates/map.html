@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>EcoLocal - Seu Bairro</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="stylesheet" href="../static/css/style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -19,14 +20,15 @@
     <div id="main_map">
           <div id="map_esquerda">
             <fieldset>
-                <legend>Identidade do Bairro</legend>
-                <fieldset>
-                    <legend>Informações do Bairro</legend>
-                    <p id="bairro">Nome do Bairro: -</p>
-                    <p id="cidade">Cidade: -</p>
-                    <p id="estado">Estado: -</p>
-                    <p id="descricaoBairro">Descrição: -</p>
-                </fieldset>
+                <legend>Projetos Sociais</legend>
+                <div id="cards-container">
+                  {% for projeto in projetos %}
+                      <div class="card">
+                          <h3>{{ projeto.nome_social }}</h3>
+                          <p>{{ projeto.nome_social }}</p>
+                      </div>
+                  {% endfor %}
+              </div>
             </fieldset>            
         </div>
 
@@ -42,6 +44,7 @@
  
     <script src="../static/script.js/db_buscaCep.js"></script>
     <script src="../static/script.js/db_map.js"></script>
+    <script src="../static/script.js/barraSocial.js"></script>
   
 </body>
 </html>
