@@ -1,17 +1,27 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, jsonify
 import sqlite3
 
-app = Flask(__name__)
-
-def get_projetos():
+def get_projetos(numero_cep):
     conn = sqlite3.connect('ecolocal.db')
     cursor = conn.cursor()
+
+    cursor.execute('''SELECT nome_social 
+                      FROM social 
+                      WHERE id_ecolocal_cep IN (
+                          SELECT id 
+                          FROM ecolocal_cep 
+                          WHERE cep = ?)''', (numero_cep,))
     
-    cursor.execute('SELECT nome_social FROM social')
-    
+    cursor.execute('''
+        SELECT pessoa_social.nome, social.nome_social 
+        FROM social
+        JOIN pessoa_social ON social.id_pessoa_social = pessoa_social.id
+        JOIN ecolocal_cep ON social.id_ecolocal_cep = ecolocal_cep.id
+        WHERE ecolocal_cep.cep = ?
+    ''', (numero_cep,))
+
     dados = cursor.fetchall()
-    conn.close()
-    
-    return [{"nome_social": projeto[0]} for projeto in dados]
+    conn.close() 
+
+    return [{"nome_pessoa": dado[0], "nome_social": dado[1]} for dado in dados]

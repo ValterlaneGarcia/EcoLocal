@@ -164,9 +164,118 @@ fieldset {
     display: flex;
     align-items: center;
     flex-direction: column;
+
+    cursor: pointer;
 }
 
+.card:hover {
+    background-color: #abfe94;
+
+}
+
+
 .card > h3 {
+    font-size: 15px;
     padding-left: 10px;
     padding-right: 10px;
+    text-transform: uppercase;
+    color: #424242;
+
+}
+
+.card > p {
+    color: #424242;
+}
+
+#map_esquerda > fieldset {
+    height: 90%;
+}
+
+.NoProject {
+    background-color: #424242;
+    
+    width: 100%;
+    height: 60px;
+    border-radius: 5px 5px 5px 5px;
+    margin-top: 10px;
+    padding: 2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+
+    cursor: pointer;
+}
+
+.inserir_clas {
+    background-color: rgb(64, 255, 83);
+
+    width: 100%;
+    height: 35px;
+    border-radius: 5px 5px 5px 5px;
+
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    cursor: pointer;
+}
+
+#inserir_projeto {
+    margin-top: 7px;
+    width: 100%;
+    height: 26vh;
+}
+
+.label_class {
+    font-style: oblique;
+    font-weight: bold;
+
+    padding-left: 10px;
+}
+
+
+.form {
+    display: flex;
+    align-items: center;
+}
+
+.form2 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.form2 input {
+    height: 30px;
+    width: 80%;
+
+    margin: 5px;
+    text-align: center;
+}
+
+form input {
+    height: 30px;
+    width: 50%;
+
+    margin: 5px;
+    text-align: center;
+}
+
+.label_class2 {
+    font-style: oblique;
+    font-weight: bold;
+
+    padding-left: 10px;
+}
+
+#decricao_social {
+    width: 90%;
+    height: 70px;
+
+    text-align: center;
 }

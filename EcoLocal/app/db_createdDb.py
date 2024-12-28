@@ -27,6 +27,7 @@ cursor.execute('''
 CREATE TABLE IF NOT EXISTS social (
     id               INTEGER PRIMARY KEY,
     nome_social      TEXT NOT NULL,
+    descricao        TEXT,
     data_update      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     data_created     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_pessoa_social INTEGER,

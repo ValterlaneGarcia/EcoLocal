@@ -1,29 +1,38 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, render_template, jsonify
-from db_conection import get_projetos  # Função para pegar os projetos
-
-# Configuração da aplicação Flask
+from flask import Flask, render_template, request, jsonify
+from db_conection import get_projetos 
+from db_insereBanco import set_infomacoes
 app = Flask(__name__, 
-            template_folder='../templates',  # Caminho para a pasta 'templates', um nível acima
-            static_folder='../static')  # Caminho para a pasta 'static', um nível acima
+            template_folder='../templates',  
+            static_folder='../static')  
 
-# Rota para a página principal (index.html)
 @app.route('/')
 def index():
-    return render_template('index.html')  # Renderiza o template index.html
+    return render_template('index.html')
 
-# Rota para a página map.html, incluindo os dados da tabela 'social'
-@app.route('/map')
+@app.route('/map', methods=['GET'])
 def map_page():
-    projetos = get_projetos()  # Chama a função que vai pegar os projetos
-    return render_template('map.html', projetos=projetos)  # Passa os projetos para o template
+    return render_template('map.html') 
 
-# Rota para pegar projetos sociais da tabela 'social' (API para o JS pegar os dados)
-@app.route('/api/projetos', methods=['GET'])
-def api_projetos():
-    projetos = get_projetos()  # Chama a função para obter os dados
-    return jsonify(projetos)  # Retorna em formato JSON
+@app.route('/api/map/banco', methods=['POST'])
+def api_mapb():
+    data        = request.get_json()
+    info        = data.get('MyInfo')
+
+    print(info)
+    projetos = set_infomacoes(info)
+    return jsonify(projetos)
+
+
+@app.route('/api/map', methods=['POST'])
+def api_map():
+    data        = request.get_json()
+    numero_cep  = data.get('myData') 
+
+    projetos = get_projetos(numero_cep)
+
+    return jsonify(projetos)
 
 if __name__ == '__main__':
     app.run(debug=True)

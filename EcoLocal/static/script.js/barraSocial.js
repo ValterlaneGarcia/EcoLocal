@@ -1,28 +1,48 @@
-   // A variável "projetos" é passada pelo Flask
-   var projetos = {{ projetos | tojson }};  // Converte o objeto Python para JSON em JavaScript
+window.onload = () => {
+    novaTela();
+}
 
-   // Verifica se "projetos" não é vazio
-   if (projetos && projetos.length > 0) {
-       // Pega o container de cards
-       var container = document.getElementById("cards-container");
+function novaTela() {
 
-       // Para cada projeto na lista "projetos", criamos um card
-       projetos.forEach(function(projeto) {
-           var card = document.createElement("div");
-           card.classList.add("card");  // Classe para estilizar os cards
-           
-           // Adiciona conteúdo no card
-           card.innerHTML = `
-               <h3>${projeto.nome_social}</h3>
-               <p>${projeto.descricao || 'Sem descrição'}</p>
-           `;
+    const numeroBairro = localStorage.getItem('cep');
+    fetch('/api/map', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',  
+        },
+        body: JSON.stringify({ myData: numeroBairro })  
+    })
+    .then(response => response.json())  
+    .then(data => {
 
-           // Coloca o card dentro do container
-           container.appendChild(card);
-       });
-   } else {
-       // Caso não tenha projetos, mostra uma mensagem
-       var container = document.getElementById("cards-container");
-       container.innerHTML = "<p>Não há projetos sociais disponíveis.</p>";
-   }
-   
+        if (data && data.length > 0) {
+            var container = document.getElementById("cards-container"); 
+
+            data.forEach(function(projeto) {
+                var card = document.createElement("div");
+                card.classList.add("card");
+
+                card.innerHTML = `
+                    <h3>${projeto.nome_social}</h3>
+                    <p>${projeto.nome_pessoa || 'Sem descriÃ§Ã£o'}</p>
+                `;
+
+                container.appendChild(card);
+            });
+        } else {
+            var container = document.getElementById("cards-container");
+            container.innerHTML = `<div class="NoProject"><p>NÃ£o hÃ¡ projetos sociais disponÃ­veis.</p><div>`;
+        }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    });
+}
+
+function atualizarProjetos() {
+    const container = document.getElementById("cards-container");
+    container.innerHTML = ''; 
+
+    novaTela();
+    
+}
