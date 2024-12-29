@@ -1,6 +1,7 @@
-const botao = document.getElementById('criar');
-const botaoC = document.getElementById('inserir');
-const abaProjeto = document.getElementById('inserir_projeto');
+const botao             = document.getElementById('criar');
+const botaoC            = document.getElementById('inserir');
+const abaProjeto        = document.getElementById('inserir_projeto');
+const mostra_projeto    = document.getElementById('mostra_projeto');
 
 botao.addEventListener('click', aba);
 
@@ -9,6 +10,7 @@ function aba() {
         abaProjeto.style.display = 'block';
         botao.style.display = 'none';
         botaoC.style.display = '';
+        mostra_projeto.style.display = 'none';
     } else {
         abaProjeto.style.display = 'none';
         botao.style.display = '';
@@ -52,7 +54,7 @@ function ValidaInfo(event) {
     const telefone          = document.getElementById('telefone')?.value.trim();
     const email             = document.getElementById('email')?.value.trim();
     const nomeSocial        = document.getElementById('nome_social')?.value.trim();
-    const descricao         = document.getElementById('decricao_social')?.value;
+    const descricao         = document.getElementById('decricao_social').value;
     const numero_cep        = localStorage.getItem('cep');
     const nome_bairro       = localStorage.getItem('bairro');
 
@@ -88,5 +90,3 @@ function ValidaInfo(event) {
     aba();
 
 }
-
-
